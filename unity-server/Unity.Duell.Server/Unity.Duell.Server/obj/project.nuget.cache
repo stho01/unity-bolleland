@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "lWi9fa5S2gXhpAq089m+f8rYWCFUEmK2fNO9AtMO511+nAj9E8xePfzzPqQHO9yVcU7q3mJ61LutCDv87AM5Ag==",
+  "success": true,
+  "projectFilePath": "C:\\projects\\Forse\\Unity\\unity-bolleland\\unity-server\\Unity.Duell.Server\\Unity.Duell.Server\\Unity.Duell.Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\messe\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\messe\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\messe\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\messe\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\messe\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\messe\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}

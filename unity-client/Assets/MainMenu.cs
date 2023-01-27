@@ -1,7 +1,7 @@
+using Assets.GameServer;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -34,7 +34,8 @@ public class MainMenu : MonoBehaviour
         }
         else if (Input.GetKeyUp(KeyCode.Return))
         {
-            SceneManager.LoadScene("");
+            //SceneManager.LoadScene("");
+            new GameServerApiClient().StartNewGame();
         }
 
         for (int i = 0; i < menuItems.Count; i++)
@@ -48,8 +49,5 @@ public class MainMenu : MonoBehaviour
                 menuItems[i].color = Color.white;
             }
         }
-
-
-
     }
 }

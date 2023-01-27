@@ -2,17 +2,20 @@ using Assets.GameServer;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     int selectedMenuItem = 0;
 
-    public List<TextMeshPro> menuItems;
+    public List<TextMeshPro> _menuItems;
+
+    public GameData _gameData;
 
     // Start is called before the first frame update
     void Start()
     {
-        menuItems[0].color = Color.blue;
+        _menuItems[0].color = Color.blue;
     }
 
     // Update is called once per frame
@@ -33,21 +36,29 @@ public class MainMenu : MonoBehaviour
             }
         }
         else if (Input.GetKeyUp(KeyCode.Return))
-        {
-            //SceneManager.LoadScene("");
-            new GameServerApiClient().StartNewGame();
+        {            
+            var newGameData = new GameServerApiClient().StartNewGame();
+            _gameData.GameId = newGameData.GameId;
+            _gameData.PlayerId = newGameData.PlayerId;
+            SceneManager.LoadScene("MainGame");
         }
 
-        for (int i = 0; i < menuItems.Count; i++)
+        for (int i = 0; i < _menuItems.Count; i++)
         {
             if (i == selectedMenuItem)
             {
-                menuItems[i].color = Color.blue;
+                _menuItems[i].color = Color.blue;
             }
             else
             {
-                menuItems[i].color = Color.white;
+                _menuItems[i].color = Color.white;
             }
         }
+    }
+
+    void OnDisable()
+    {
+        PlayerPrefs.SetString("gameData.gameId", _gameData.GameId.ToString());
+        PlayerPrefs.SetString("gameData.playerId", _gameData.PlayerId.ToString());
     }
 }

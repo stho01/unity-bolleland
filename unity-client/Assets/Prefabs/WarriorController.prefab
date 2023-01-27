@@ -41,8 +41,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1096768758257450268}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dab22c4d370241358066af422a722d7d, type: 3}
+  m_Script: {fileID: 11500000, guid: f49b974cec8c4fd6a9084c22f56db5b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warriorA: {fileID: 3596748220834623885, guid: 866926bb2873b154cbd6b23811fe5588, type: 3}
-  warriorB: {fileID: 2624500902072132700, guid: a3f9636e351f2be4b9244617ecda41fa, type: 3}
+  player1: {fileID: 4208773673220471778, guid: 8543645fab2590e4ab997b5b7a6f8411, type: 3}
+  player2: {fileID: 2677720547168364290, guid: f525c39e72ad21944af16e002d613158, type: 3}
+  hud: {fileID: 5129333056233684602, guid: c257fcfbb8a5d724aa6910487ea1578e, type: 3}

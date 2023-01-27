@@ -38,6 +38,7 @@ public class MainMenu : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.Return))
         {            
             var newGameData = new GameServerApiClient().StartNewGame();
+            _gameData = new GameData();
             _gameData.GameId = newGameData.GameId;
             _gameData.PlayerId = newGameData.PlayerId;
             SceneManager.LoadScene("MainGame");

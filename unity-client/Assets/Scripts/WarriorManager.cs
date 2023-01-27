@@ -3,13 +3,6 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public enum Move
-{
-    High = 0,
-    Mid = 1,
-    Low = 2
-}
-
 public class WarriorManager : MonoBehaviour
 {
     public GameObject warriorA;

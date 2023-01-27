@@ -123,6 +123,25 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &69096204 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8377381475502894246, guid: 747fd065fff4565429cf26fc34ba764b, type: 3}
+  m_PrefabInstance: {fileID: 4991640588986926050}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &69096207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69096204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f49b974cec8c4fd6a9084c22f56db5b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  warriorA: {fileID: 3596748220834623885, guid: 866926bb2873b154cbd6b23811fe5588, type: 3}
+  warriorB: {fileID: 2624500902072132700, guid: a3f9636e351f2be4b9244617ecda41fa, type: 3}
 --- !u!1001 &78461796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3349,5 +3368,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WarriorController
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2207210724466548577, guid: 747fd065fff4565429cf26fc34ba764b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 747fd065fff4565429cf26fc34ba764b, type: 3}

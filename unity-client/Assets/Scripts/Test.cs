@@ -5,22 +5,28 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    public Animator animator;
-    public AnimatorController jumpAnimation;
-    
-
+    private Animator _animator;
+    private Rigidbody _rigidbody;
+    public float jumpForce;
     // Start is called before the first frame update
     void Start()
     {
-           
+        _animator = GetComponent<Animator>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        
+        
+        var v = Input.GetAxis ("Vertical");
+        _animator.SetFloat("Speed", v);
+        
+        if (Input.GetButtonDown("Jump"))
         {
-            
+            _animator.SetTrigger("Jump");   
+            _rigidbody.AddForce(Vector3.up * jumpForce);
         }
     }
 }

@@ -1195,6 +1195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 583277700}
+  - component: {fileID: 583277701}
   m_Layer: 0
   m_Name: DesertScene
   m_TagString: Untagged
@@ -1220,6 +1221,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &583277701
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583277699}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &602983467
 GameObject:
   m_ObjectHideFlags: 0
@@ -3383,7 +3398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 91537696499146005, guid: 8526fc62d267e704aabe14dd3ca9d7ed, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.0000014305115
+      value: 1.227
       objectReference: {fileID: 0}
     - target: {fileID: 91537696499146005, guid: 8526fc62d267e704aabe14dd3ca9d7ed, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3421,16 +3436,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShieldWarrior
       objectReference: {fileID: 0}
+    - target: {fileID: 91537696508703369, guid: 8526fc62d267e704aabe14dd3ca9d7ed, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a381df27cffedbe49b7088c7ce78935c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8526fc62d267e704aabe14dd3ca9d7ed, type: 3}
 --- !u!1 &1802588019 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 91537696499171573, guid: 8526fc62d267e704aabe14dd3ca9d7ed, type: 3}
-  m_PrefabInstance: {fileID: 1763364061}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1802588020 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 91537696508703369, guid: 8526fc62d267e704aabe14dd3ca9d7ed, type: 3}
   m_PrefabInstance: {fileID: 1763364061}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1802588022
@@ -3445,8 +3459,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ab8cec4433809438064dab94864ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 1802588020}
-  jumpAnimation: {fileID: 9100000, guid: 54ff599963ec97843ad4d4ddeeb61810, type: 2}
+  jumpForce: 0
+--- !u!54 &1802588023
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802588019}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!136 &1802588024
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1802588019}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &1816350184
 PrefabInstance:
   m_ObjectHideFlags: 0

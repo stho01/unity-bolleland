@@ -1,31 +1,12 @@
-<<<<<<< HEAD
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public enum Move
-{
-    High = 0,
-    Mid = 1,
-    Low = 2
-=======
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public enum MoveSet
-{
-    Defend = 0,
-    Attack = 1
->>>>>>> 5266a26887f4eabf8660ece9d09b21b5b3235879
-}
-
 public class WarriorManager : MonoBehaviour
 {
     public GameObject warriorA;
     public GameObject warriorB;
-<<<<<<< HEAD
     private WarriorMovement _player1Movement;
     private WarriorMovement _player2Movement;
     private GameObject _player1;
@@ -35,28 +16,21 @@ public class WarriorManager : MonoBehaviour
     private Frame _currentFrame;
     private int _frameCounter = 0;
     private float _currentFrameTime = 0f;
-=======
->>>>>>> 5266a26887f4eabf8660ece9d09b21b5b3235879
     
     
     // Start is called before the first frame update
     void Start()
     {
-<<<<<<< HEAD
         _player1 = Instantiate(warriorA, new Vector3(0,0,1f), new Quaternion(0f,180f,0f, 1), transform);
         _player1Movement = _player1.GetComponent<WarriorMovement>();
         _player2 = Instantiate(warriorB, new Vector3(0,0,-1f), Quaternion.identity, transform);
         _player2Movement = _player2.GetComponent<WarriorMovement>();
-=======
-        
->>>>>>> 5266a26887f4eabf8660ece9d09b21b5b3235879
     }
 
     // Update is called once per frame
     void Update()
     {
         // TODO: Replace with server data. 
-<<<<<<< HEAD
         if (Input.GetKeyDown(KeyCode.Q) && !_frames.Any())
         {
             for (var i = 0; i < 3; i++)
@@ -121,11 +95,5 @@ public class WarriorManager : MonoBehaviour
             
             // todo: calculate dmg taken  
         } 
-=======
-        if (Input.GetButtonDown("Jump"))
-        {  
-            
-        }
->>>>>>> 5266a26887f4eabf8660ece9d09b21b5b3235879
     }
 }

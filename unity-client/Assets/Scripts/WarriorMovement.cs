@@ -15,7 +15,6 @@ public class WarriorMovement : MonoBehaviour
         Debug.Log($"Animator = {_animator == null}");
     }
 
-<<<<<<< HEAD
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -34,19 +33,9 @@ public class WarriorMovement : MonoBehaviour
         Jump();
     }
     
-=======
->>>>>>> 5266a26887f4eabf8660ece9d09b21b5b3235879
     public void Jump()
     {
         _animator.SetTrigger("Jump");
         _rigidbody.AddForce(Vector3.up * jumpForce);
     }
-<<<<<<< HEAD
-=======
-
-    public void Attack()
-    {
-        _animator.SetTrigger("Attack");
-    }
->>>>>>> 5266a26887f4eabf8660ece9d09b21b5b3235879
 }

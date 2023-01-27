@@ -349,14 +349,8 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.VSCode.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
-"Assets/GameServer/GameServerApiClient.cs"
-"Assets/GameServer/Generated/GameServerClient.cs"
 "Assets/MainGame.cs"
 "Assets/MainMenu.cs"
-<<<<<<< HEAD
-=======
-"Assets/Scripts/Test.cs"
->>>>>>> 5266a26887f4eabf8660ece9d09b21b5b3235879
 "Assets/Scripts/WarriorManager.cs"
 "Assets/Scripts/WarriorMovement.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"

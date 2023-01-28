@@ -26,5 +26,14 @@ namespace Assets.GameServer
             Debug.Log("Response from server: \n" + resultAsJSon);
             return result;
         }
+
+        public GameStateResponse GetGameStatus(Guid? gameId, Guid? playerId)
+        {
+            IGameServerClient client = new GameServerClient(_httpClient);
+            var result = client.GetGameState(gameId, playerId);
+            var resultAsJSon = JsonConvert.SerializeObject(result);
+            Debug.Log("Response from server: \n" + resultAsJSon);
+            return result;
+        }
     }
 }

@@ -36,12 +36,23 @@ public class MainMenu : MonoBehaviour
             }
         }
         else if (Input.GetKeyUp(KeyCode.Return))
-        {            
-            var newGameData = new GameServerApiClient().StartNewGame();
-            _gameData = new GameData();
-            _gameData.GameId = newGameData.GameId;
-            _gameData.PlayerId = newGameData.PlayerId;
-            SceneManager.LoadScene("MainGame");
+        {
+            if (selectedMenuItem == 0)
+            {
+                var newGameData = new GameServerApiClient().StartNewGame();
+                _gameData = new GameData();
+                _gameData.GameId = newGameData.GameId;
+                _gameData.PlayerId = newGameData.PlayerId;
+                SceneManager.LoadScene("MainGame");
+            }
+            else if (selectedMenuItem == 1)
+            {
+
+            }
+            else if (selectedMenuItem == 2) 
+            {
+                Application.Quit();
+            }
         }
 
         for (int i = 0; i < _menuItems.Count; i++)

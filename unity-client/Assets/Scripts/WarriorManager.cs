@@ -15,7 +15,6 @@ public class WarriorManager : MonoBehaviour
     
     private readonly Queue<Frame> _frames = new();
     private Frame _currentFrame;
-    private int _frameCounter = 0;
     private float _currentFrameTime = 0f;
     
     // Start is called before the first frame update
@@ -97,6 +96,7 @@ public class WarriorManager : MonoBehaviour
         {
             _attackingWarrior.Attack(_attack);
             _defendingWarrior.Defend(_defend);
+            
             // todo: calculate dmg taken  
         } 
     }

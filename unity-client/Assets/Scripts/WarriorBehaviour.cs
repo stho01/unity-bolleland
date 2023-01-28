@@ -39,7 +39,6 @@ public class WarriorBehaviour : MonoBehaviour
             _animator.SetTrigger("Defend");
         if (Input.GetKeyDown(KeyCode.R))
             _animator.SetTrigger("Crouch");
-        
         if (IsDead && !isDeadBeforeUpdate)
             _animator.SetTrigger("Died");
     }

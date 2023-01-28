@@ -1,5 +1,6 @@
 ﻿using GameServer;
 using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using UnityEngine;
 
@@ -17,11 +18,10 @@ namespace Assets.GameServer
             };
         }
 
-        public GameStateResponse StartNewGame()
+        public StartGameResponse StartNewGame()
         {
             IGameServerClient client = new GameServerClient(_httpClient);
-            string gameId = "1";
-            var result = client.GetGameState(gameId);
+            var result = client.StartGame(new StartGameRequest());
             var resultAsJSon = JsonConvert.SerializeObject(result);
             Debug.Log("Response from server: \n" + resultAsJSon);
             return result;

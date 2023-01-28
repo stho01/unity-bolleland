@@ -35,16 +35,42 @@ namespace GameServer
 
         /// <returns>Success</returns>
         /// <exception cref="GameServerApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GameStateResponse> GetGameStateAsync(string id);
+        System.Threading.Tasks.Task<GameStateResponse> GetGameStateAsync(System.Guid? id, System.Guid? playerId);
 
         /// <returns>Success</returns>
         /// <exception cref="GameServerApiException">A server side error occurred.</exception>
-        GameStateResponse GetGameState(string id);
+        GameStateResponse GetGameState(System.Guid? id, System.Guid? playerId);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="GameServerApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<GameStateResponse> GetGameStateAsync(string id, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<GameStateResponse> GetGameStateAsync(System.Guid? id, System.Guid? playerId, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>Success</returns>
+        /// <exception cref="GameServerApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<SetMovesResponse> SetMovesAsync(SetMovesRequest body);
+
+        /// <returns>Success</returns>
+        /// <exception cref="GameServerApiException">A server side error occurred.</exception>
+        SetMovesResponse SetMoves(SetMovesRequest body);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="GameServerApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<SetMovesResponse> SetMovesAsync(SetMovesRequest body, System.Threading.CancellationToken cancellationToken);
+
+        /// <returns>Success</returns>
+        /// <exception cref="GameServerApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetPreviousRoundResponse> GetPreviousRoundAsync(System.Guid? id);
+
+        /// <returns>Success</returns>
+        /// <exception cref="GameServerApiException">A server side error occurred.</exception>
+        GetPreviousRoundResponse GetPreviousRound(System.Guid? id);
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="GameServerApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetPreviousRoundResponse> GetPreviousRoundAsync(System.Guid? id, System.Threading.CancellationToken cancellationToken);
 
     }
 
@@ -162,25 +188,200 @@ namespace GameServer
 
         /// <returns>Success</returns>
         /// <exception cref="GameServerApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<GameStateResponse> GetGameStateAsync(string id)
+        public virtual System.Threading.Tasks.Task<GameStateResponse> GetGameStateAsync(System.Guid? id, System.Guid? playerId)
         {
-            return GetGameStateAsync(id, System.Threading.CancellationToken.None);
+            return GetGameStateAsync(id, playerId, System.Threading.CancellationToken.None);
         }
 
         /// <returns>Success</returns>
         /// <exception cref="GameServerApiException">A server side error occurred.</exception>
-        public virtual GameStateResponse GetGameState(string id)
+        public virtual GameStateResponse GetGameState(System.Guid? id, System.Guid? playerId)
         {
-            return System.Threading.Tasks.Task.Run(async () => await GetGameStateAsync(id, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+            return System.Threading.Tasks.Task.Run(async () => await GetGameStateAsync(id, playerId, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="GameServerApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<GameStateResponse> GetGameStateAsync(string id, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<GameStateResponse> GetGameStateAsync(System.Guid? id, System.Guid? playerId, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append("GameServer/GetGameState?");
+            if (id != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("id") + "=").Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (playerId != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("playerId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(playerId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<GameStateResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new GameServerApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new GameServerApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="GameServerApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<SetMovesResponse> SetMovesAsync(SetMovesRequest body)
+        {
+            return SetMovesAsync(body, System.Threading.CancellationToken.None);
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="GameServerApiException">A server side error occurred.</exception>
+        public virtual SetMovesResponse SetMoves(SetMovesRequest body)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await SetMovesAsync(body, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="GameServerApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<SetMovesResponse> SetMovesAsync(SetMovesRequest body, System.Threading.CancellationToken cancellationToken)
+        {
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append("GameServer/SetMoves");
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var json_ = Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value);
+                    var content_ = new System.Net.Http.StringContent(json_);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<SetMovesResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new GameServerApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new GameServerApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="GameServerApiException">A server side error occurred.</exception>
+        public virtual System.Threading.Tasks.Task<GetPreviousRoundResponse> GetPreviousRoundAsync(System.Guid? id)
+        {
+            return GetPreviousRoundAsync(id, System.Threading.CancellationToken.None);
+        }
+
+        /// <returns>Success</returns>
+        /// <exception cref="GameServerApiException">A server side error occurred.</exception>
+        public virtual GetPreviousRoundResponse GetPreviousRound(System.Guid? id)
+        {
+            return System.Threading.Tasks.Task.Run(async () => await GetPreviousRoundAsync(id, System.Threading.CancellationToken.None)).GetAwaiter().GetResult();
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <returns>Success</returns>
+        /// <exception cref="GameServerApiException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<GetPreviousRoundResponse> GetPreviousRoundAsync(System.Guid? id, System.Threading.CancellationToken cancellationToken)
+        {
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append("GameServer/GetPreviousRound?");
             if (id != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("id") + "=").Append(System.Uri.EscapeDataString(ConvertToString(id, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
@@ -219,7 +420,7 @@ namespace GameServer
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<GameStateResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<GetPreviousRoundResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new GameServerApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -350,6 +551,29 @@ namespace GameServer
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
+    public partial class FrameResult
+    {
+        [Newtonsoft.Json.JsonProperty("attack", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Move Attack { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("defence", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Move Defence { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("defenderHpBefore", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int DefenderHpBefore { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("defenderHpAfter", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int DefenderHpAfter { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("attackerId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid AttackerId { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("defenderId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid DefenderId { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
     public enum GameState
     {
 
@@ -359,44 +583,168 @@ namespace GameServer
 
         WaitingForOpponent = 2,
 
-        NewRound = 3,
-
-        Finished = 4,
+        Finished = 3,
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
     public partial class GameStateResponse
     {
+        [Newtonsoft.Json.JsonProperty("result", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Result Result { get; set; }
+
         [Newtonsoft.Json.JsonProperty("gameState", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public GameState GameState { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("numberOfRoundsPlayed", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int NumberOfRoundsPlayed { get; set; }
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
-    public partial class Player
+    public partial class GetPreviousRoundResponse
     {
-        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Email { get; set; }
+        [Newtonsoft.Json.JsonProperty("result", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Result Result { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("round", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public RoundResult Round { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
+    public enum Move
+    {
+
+        Low = 0,
+
+        Medium = 1,
+
+        High = 2,
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
+    public partial class PlayerMoves
+    {
+        [Newtonsoft.Json.JsonProperty("attack1", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Move Attack1 { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("attack2", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Move Attack2 { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("attack3", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Move Attack3 { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("defence1", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Move Defence1 { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("defence2", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Move Defence2 { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("defence3", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Move Defence3 { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
+    public partial class Result
+    {
+        [Newtonsoft.Json.JsonProperty("resultCode", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ResultCode ResultCode { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Description { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
+    public enum ResultCode
+    {
+
+        Error = 0,
+
+        OK = 1,
+
+        InvalidInput = 2,
+
+        NotFound = 3,
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
+    public partial class RoundResult
+    {
+        [Newtonsoft.Json.JsonProperty("steps", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<RoundStep> Steps { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("player1HpStart", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Player1HpStart { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("player2HpStart", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Player2HpStart { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("player1HpEnd", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Player1HpEnd { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("player2HpEnd", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Player2HpEnd { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
+    public partial class RoundStep
+    {
+        [Newtonsoft.Json.JsonProperty("frame1", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public FrameResult Frame1 { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("frame2", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public FrameResult Frame2 { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
+    public partial class SetMovesRequest
+    {
+        [Newtonsoft.Json.JsonProperty("gameId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid GameId { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("playerId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid PlayerId { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("moves", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public PlayerMoves Moves { get; set; }
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
+    public partial class SetMovesResponse
+    {
+        [Newtonsoft.Json.JsonProperty("result", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Result Result { get; set; }
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
     public partial class StartGameRequest
     {
-        [Newtonsoft.Json.JsonProperty("gameStarter", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Player GameStarter { get; set; }
-
-        [Newtonsoft.Json.JsonProperty("opponent", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Player Opponent { get; set; }
 
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.18.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v11.0.0.0))")]
     public partial class StartGameResponse
     {
+        [Newtonsoft.Json.JsonProperty("result", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Result Result { get; set; }
+
         [Newtonsoft.Json.JsonProperty("gameId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Guid GameId { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("playerId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid PlayerId { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("opponentId", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Guid OpponentId { get; set; }
 
     }
 
